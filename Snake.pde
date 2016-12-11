@@ -7,7 +7,7 @@ public static final int GRAY = -4;
 public static final int BLACK = -5;
 public static final int RED = -6;
 public static final int FACE = -7;
-
+public static final int WALL = -8;
 
 void setup(){
   size(400, 400);
@@ -20,7 +20,6 @@ void setup(){
   G.createSnake(att);
   G.createAdj();
   
-  //G.printGraph();
 }
 
 int xSize = 400, ySize = 400;
@@ -36,7 +35,6 @@ int i, j, v;
 Graph G = new Graph(high, wide);
 List att = new List();
 List path = new List(); // Path from source to head of snake
-boolean playing = true;
 
 
 void draw(){
@@ -82,6 +80,7 @@ void moveLeft(){
   }
 }
 
+// Moves the player and increments score
 void move(){
   if(keyCode == RIGHT) moveRight();
   if(keyCode == LEFT) moveLeft();

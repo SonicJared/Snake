@@ -7,6 +7,7 @@ class Graph{
   public static final int BLACK = -5;
   public static final int RED = -6;
   public static final int FACE = -7;
+  public static final int WALL = -8;
   
   int verts, edges, source;
   List[] adj;
