@@ -58,25 +58,25 @@ void draw(){
 
 void moveUp(){
   if(player > wide && G.snake.front() != player- wide){
-    player -= wide;
+    if(G.col[player - wide] != WALL)player -= wide;
   }
 }
 
 void moveDown(){
   if(player < G.verts - wide && G.snake.front() != player+ wide){
-    player += wide;
+    if(G.col[player + wide] != WALL)player += wide;
   }
 }
 
 void moveRight(){
   if(player % wide != 0 && G.snake.front() != player+ 1){
-    player ++;
+    if(G.col[player + 1] != WALL)player ++;
   }
 }
 
 void moveLeft(){
   if(player % wide != 1 && G.snake.front() != player- 1){
-    player --;
+    if(G.col[player - 1] != WALL) player --;
   }
 }
 
@@ -101,6 +101,8 @@ void createGame(){
         fill(255, 0, 0);
       }else if(v == G.snake.front()){
         fill(150, 0, 0);
+      }else if(G.col[v] == WALL){
+        fill(0, 0, 0);
       }
       rect(j*squareSize, i*squareSize, squareSize, squareSize);
       fill(255, 255, 255);

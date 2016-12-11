@@ -91,7 +91,7 @@ class Graph{
   void BFS(int s){ //Performs Breadth First Search with s as the source
     List Q = new List();
     for(int i = 1; i <= verts; i++){
-        if(col[i] != RED){
+        if(col[i] != RED && col[i] != WALL){
           col[i] = WHITE;
           dist[i] = INF;
           parent[i] = NIL;
@@ -157,6 +157,20 @@ class Graph{
     
     col[snake.back()] = WHITE;
     snake.deleteBack();
+  }
+  
+  void createHorWall(int a, int b){ //Creates a horizontal wall from a to b.
+                        //Pre: b-a < wide
+    for(i = a; i <= b; i++){
+      col[i] = WALL;
+    }
+  }
+  
+  void createVertWall(int a, int b){ //Creates a vertical wall from a to b
+                                     //Pre: a%wide = b%wide and b-a < high
+    for(i = a; i <= b; i += wide){
+      col[i] = WALL;
+    }
   }
   
   /*** Other operations ***/
