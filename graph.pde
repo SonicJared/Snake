@@ -127,7 +127,6 @@ class Graph{
   void createAdj(){  //Initializes adjacencies for a rectangular graph
     for(i = 1; i <= verts; i++){
       if(i <= verts - wide){
-        //System.out.println(i + (i+wide));
         addEdge(i, i + wide);
       }
       if(i % wide != 0){
@@ -137,6 +136,7 @@ class Graph{
   }
   
   void createSnake(List L){ // Sets the vertecies in L to red, and makes them the "Snake"
+                            // The head of the snake is not red, because it must be recognized by BFS
     snake = L;
     snake.moveFront();
     col[snake.get()] = FACE;
