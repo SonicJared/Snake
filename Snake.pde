@@ -20,6 +20,11 @@ void setup(){
   G.createSnake(att);
   G.createAdj();
   
+  G.createHorWall(13, 17);
+  G.createHorWall(35, 40);
+  G.createHorWall(42, 43);
+  G.createVertWall(22, 32);
+  
 }
 
 int xSize = 400, ySize = 400;
