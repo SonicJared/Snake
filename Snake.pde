@@ -20,13 +20,7 @@ void setup(){
   G.createSnake(att);
   G.createAdj();
   
-  G.createHorWall(13, 17);
-  G.createHorWall(35, 40);
-  G.createHorWall(42, 43);
-  G.createVertWall(22, 32);
-  G.createVertWall(58, 68);
-  G.createHorWall(55, 59);
-  G.createHorWall(72, 75);
+  G.randomWall(10);
   
 }
 
@@ -38,6 +32,7 @@ int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
 int score = 0;
 boolean playing = true;
+boolean played = false;
 
 int delay = 0;             // Delay counter for the Delay Powerup
 boolean delayPowerUp = false;
@@ -54,11 +49,9 @@ List path = new List(); // Path from source to head of snake
 
 void draw(){
   
-  //menuScreen();
+  if(playing == false)menuScreen();
   
-  //while(playing != false){
-    playGame();
-  //}
+  if(playing) playGame();
 
   //gameOver();
   
@@ -108,44 +101,33 @@ void gameOver(){
 }
 
 void menuScreen(){
-  //background(0, 0, 0);
-  System.out.println("in menu");
- // while(playing == false){
-    //System.out.println("in while loop");
-    fill(0,50,0);
-    rect(0, 0, 50 , 50);
-    //fill(255, 0, 0);
-    //rect(0, 0, (xSize/3), ySize);
-    //fill(0, 0, 0);
-    //rect((xSize/3), 0, (xSize/3), ySize);
-    //fill(255, 0, 0);
-    //rect((2*xSize/3), 0, (xSize/3), ySize);
-  //}
-  delay(5000);
+  if(played) gameOver();
+  
+  playing = true;
 }
 
 
 void moveUp(){
   if(player > wide && G.snake.front() != player- wide){
-    if(G.col[player - wide] != WALL)player -= wide;
+    if(G.col[player - wide] != WALL && G.col[player - wide] != RED)player -= wide;
   }
 }
 
 void moveDown(){
   if(player < G.verts - wide && G.snake.front() != player+ wide){
-    if(G.col[player + wide] != WALL)player += wide;
+    if(G.col[player + wide] != WALL && G.col[player + wide] != RED)player += wide;
   }
 }
 
 void moveRight(){
   if(player % wide != 0 && G.snake.front() != player+ 1){
-    if(G.col[player + 1] != WALL)player ++;
+    if(G.col[player + 1] != WALL && G.col[player + 1] != RED)player ++;
   }
 }
 
 void moveLeft(){
   if(player % wide != 1 && G.snake.front() != player- 1){
-    if(G.col[player - 1] != WALL) player --;
+    if(G.col[player - 1] != WALL && G.col[player - 1] != RED) player --;
   }
 }
 

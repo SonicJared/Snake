@@ -176,6 +176,20 @@ class Graph{
     }
   }
   
+  void randomWall(float percentFull){
+    int x = 0;
+    int tot = floor(verts*percentFull);
+    //println(tot);
+    for(int j = 0; j<tot; j++){
+      x = floor(random(1)*verts);
+      println(x);
+      if(col[x] != WALL && col[x] != RED && col[x] != FACE && x != high*wide)
+        col[x] = WALL;
+      else 
+        j -= 1;
+    }
+  }
+  
   /*** Other operations ***/
   void printGraph(){  //Prints the adjacency list of G
     for(i = 1; i <= verts; i++){
