@@ -1,3 +1,6 @@
+//Graph class that implements the List ADT.
+//Written by Jared Penner
+
 class Graph{
   
   public static final int NIL = -1;

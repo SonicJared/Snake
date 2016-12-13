@@ -1,3 +1,6 @@
+// Node class used in List
+// Written by Jared Penner
+
 class Node{
       // Fields
       int data;

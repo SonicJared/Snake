@@ -24,6 +24,9 @@ void setup(){
   G.createHorWall(35, 40);
   G.createHorWall(42, 43);
   G.createVertWall(22, 32);
+  G.createVertWall(58, 68);
+  G.createHorWall(55, 59);
+  G.createHorWall(72, 75);
   
 }
 
@@ -34,6 +37,13 @@ int squareSize = min(xSize/wide, ySize/high);
 int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
 int score = 0;
+boolean playing = true;
+
+int delay = 0;             // Delay counter for the Delay Powerup
+boolean delayPowerUp = false;
+int dPowerUpPos;
+int delayStrength = 100;
+int moveCounter = 10;
 
 
 int i, j, v;
@@ -44,22 +54,76 @@ List path = new List(); // Path from source to head of snake
 
 void draw(){
   
+  //menuScreen();
+  
+  //while(playing != false){
+    playGame();
+  //}
+
+  //gameOver();
+  
+}
+
+void playGame(){
     background(0, 0, 0);
     fill(255, 255, 255);
  
-    if(keyPressed) move();
-    path.clear();
-    G.BFS(player);
-    G.getPath(path, G.snake.front());
-    
-    path.moveBack();
-    path.movePrev();
-
-    if(path.get() != player) G.moveSnake(path.get());
-    delay(500);      
+    if(delayPowerUp == false) delayPowerUp();
+    if(keyPressed && moveCounter == 0){
+      move();
+      if(player == dPowerUpPos && delayPowerUp){
+        delay = delayStrength;
+        delayPowerUp = false;
+      }
+      moveCounter = 10;  //Creates a pause between player movements
+    }
+    if(millis() % 200 < 15){  //
+      path.clear();
+      G.BFS(player);
+      G.getPath(path, G.snake.front());
+      
+      path.moveBack();
+      path.movePrev();
+  
+      if(path.get() != player && delay == 0) G.moveSnake(path.get());
+      if(path.get() == player){
+        playing = false;
+        return;
+      }
+    }     
+    if(delay > 0) delay --;  //If there is a delay power up in effect, increment the counter
+    if(moveCounter > 0) moveCounter--;  //Creates a pause between the player's moves
     createGame();
-
 }
+
+void gameOver(){
+  background(0, 0, 0);
+  fill(255, 0, 0);
+  textSize(40);
+  textAlign(CENTER, BOTTOM);
+  text("Game Over", xSize/2, ySize/4);
+  textAlign(CENTER, CENTER);
+  text("Score: " + score, xSize/2, ySize/2);
+  delay(5000);
+}
+
+void menuScreen(){
+  //background(0, 0, 0);
+  System.out.println("in menu");
+ // while(playing == false){
+    //System.out.println("in while loop");
+    fill(0,50,0);
+    rect(0, 0, 50 , 50);
+    //fill(255, 0, 0);
+    //rect(0, 0, (xSize/3), ySize);
+    //fill(0, 0, 0);
+    //rect((xSize/3), 0, (xSize/3), ySize);
+    //fill(255, 0, 0);
+    //rect((2*xSize/3), 0, (xSize/3), ySize);
+  //}
+  delay(5000);
+}
+
 
 void moveUp(){
   if(player > wide && G.snake.front() != player- wide){
@@ -100,7 +164,7 @@ void createGame(){
     for(j = 0; j < wide; j ++){
       v = i*wide + j + 1;
       
-      if(v == G.source){
+      if(v == player){
         fill(0, 0, 255);
       }else if(G.col[v] == RED){
         fill(255, 0, 0);
@@ -108,9 +172,18 @@ void createGame(){
         fill(150, 0, 0);
       }else if(G.col[v] == WALL){
         fill(0, 0, 0);
+      }else if(delayPowerUp && v == dPowerUpPos){
+        fill(0, 255, 0);
       }
       rect(j*squareSize, i*squareSize, squareSize, squareSize);
       fill(255, 255, 255);
     }
   }
+}
+
+void delayPowerUp(){
+  dPowerUpPos = floor(random(1, G.getOrder()));
+  
+  if(G.col[dPowerUpPos] == WHITE && dPowerUpPos != player && dPowerUpPos != G.snake.front()) delayPowerUp = true;
+  
 }
