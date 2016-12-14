@@ -20,7 +20,7 @@ void setup(){
   G.createSnake(att);
   G.createAdj();
   
-  G.randomWall(10);
+  G.randomWall(.3);
   
 }
 
@@ -166,6 +166,6 @@ void createGame(){
 void delayPowerUp(){
   dPowerUpPos = floor(random(1, G.getOrder()));
   
-  if(G.col[dPowerUpPos] == WHITE && dPowerUpPos != player && dPowerUpPos != G.snake.front()) delayPowerUp = true;
+  if(G.col[dPowerUpPos] == WHITE && dPowerUpPos != player && dPowerUpPos != G.snake.front() && G.dist[dPowerUpPos] != INF) delayPowerUp = true;
   
 }

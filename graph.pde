@@ -188,6 +188,14 @@ class Graph{
       else 
         j -= 1;
     }
+    
+    BFS(high*wide);
+    if(dist[snake.front()] == INF){
+      for(i = 1; i <= verts; i++){
+        if(col[i] == WALL) col[i] = WHITE;
+      }
+      randomWall(percentFull);
+    }
   }
   
   /*** Other operations ***/
