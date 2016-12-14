@@ -33,7 +33,7 @@ int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
 int snakeCounter = 10;
 int score = 0;
-boolean playing = true;
+boolean playing = false;
 boolean played = false;
 
 int delay = 0;             // Delay counter for the Delay Powerup
@@ -128,7 +128,13 @@ void menuScreen(){
   if(played){
     gameOver();
   }else{
-    if(mousePressed && played == false){
+    fill(255, 0, 0);
+    rect(0, 0, xSize/3, ySize);
+    fill(0, 0, 0);
+    rect(xSize/3, 0, xSize/3, ySize);
+    fill(255, 0, 0);
+    rect(2*xSize/3, 0, xSize/3, ySize);
+    if(mousePressed){
       playing = true;
     }
   }
