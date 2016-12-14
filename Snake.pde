@@ -31,8 +31,7 @@ int wide = 15;
 int squareSize = min(xSize/wide, ySize/high);
 int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
-int snakeSpeed = 15;
-int speedIncrease = 30;
+int snakeCounter = 10;
 int score = 0;
 boolean playing = true;
 boolean played = false;
@@ -52,11 +51,13 @@ List path = new List(); // Path from source to head of snake
 
 void draw(){
   
-  if(playing == false)menuScreen();
+  //if(playing == false)menuScreen();
   
   if(playing) playGame();
 
-  //gameOver();
+  if(played) gameOver();
+  playing = true;
+  //played = false;
   
 }
 
@@ -73,11 +74,7 @@ void playGame(){
       }
       moveCounter = 10;  //Creates a pause between player movements
     }
-    if(score % speedIncrease == 0){
-      snakeSpeed ++;
-      score ++;
-    }
-    if(millis() % 200 < snakeSpeed){  //The snake moves when this condition is true
+    if(snakeCounter == 0){  //The snake moves when this condition is true
       path.clear();
       G.BFS(player);
       G.getPath(path, G.snake.front());
@@ -86,14 +83,16 @@ void playGame(){
       path.movePrev();
   
       if(path.get() != player && delay == 0) G.moveSnake(path.get());
+      snakeCounter = 13;
       if(path.get() == player){
         playing = false;
         played = true;
         return;
       }
     }     
-    if(delay > 0) delay --;  //If there is a delay power up in effect, increment the counter
+    if(delay > 0) delay --;  //If there is a delay power up in effect, decrement the counter
     if(moveCounter > 0) moveCounter--;  //Creates a pause between the player's moves
+    if(snakeCounter > 0) snakeCounter--;
     createGame();
 }
 
@@ -120,7 +119,7 @@ void reset(){
   G.randomWall(percentWalled);
   score = 0;
   player = high*wide;
-  snakeSpeed = 15;
+  played = false;
   
 }
 
