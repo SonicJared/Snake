@@ -13,7 +13,7 @@ void setup(){
   size(400, 400);
   fill(255, 255, 255);
   stroke(0, 0, 0);
-  strokeWeight(3);
+  strokeWeight(1);
   for(i = 1; i <= snakeSize; i ++){
     att.prepend(i);
   }
@@ -51,14 +51,13 @@ List path = new List(); // Path from source to head of snake
 
 void draw(){
   
-  //if(playing == false)menuScreen();
+  if(playing == false)menuScreen();
+
   
   if(playing) playGame();
-
-  if(played) gameOver();
-  playing = true;
-  //played = false;
   
+  //played = false;
+ 
 }
 
 void playGame(){
@@ -106,8 +105,10 @@ void gameOver(){
   text("Score: " + score, xSize/2, ySize/2);
   println("game over");
   println(score);
-  delay(5000);
-  reset();
+  if(mousePressed){
+    reset();
+    delay(500);
+  }
 }
 
 void reset(){
@@ -124,9 +125,13 @@ void reset(){
 }
 
 void menuScreen(){
-  if(played) gameOver();
-  
-  playing = true;
+  if(played){
+    gameOver();
+  }else{
+    if(mousePressed && played == false){
+      playing = true;
+    }
+  }
 }
 
 
