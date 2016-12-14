@@ -31,6 +31,8 @@ int wide = 15;
 int squareSize = min(xSize/wide, ySize/high);
 int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
+int snakeSpeed = 15;
+int speedIncrease = 30;
 int score = 0;
 boolean playing = true;
 boolean played = false;
@@ -71,7 +73,11 @@ void playGame(){
       }
       moveCounter = 10;  //Creates a pause between player movements
     }
-    if(millis() % 200 < 15){  //
+    if(score % speedIncrease == 0){
+      snakeSpeed ++;
+      score ++;
+    }
+    if(millis() % 200 < snakeSpeed){  //The snake moves when this condition is true
       path.clear();
       G.BFS(player);
       G.getPath(path, G.snake.front());
@@ -99,6 +105,8 @@ void gameOver(){
   text("Game Over", xSize/2, ySize/4);
   textAlign(CENTER, CENTER);
   text("Score: " + score, xSize/2, ySize/2);
+  println("game over");
+  println(score);
   delay(5000);
   reset();
 }
@@ -112,6 +120,7 @@ void reset(){
   G.randomWall(percentWalled);
   score = 0;
   player = high*wide;
+  snakeSpeed = 15;
   
 }
 

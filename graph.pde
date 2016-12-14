@@ -191,7 +191,7 @@ class Graph{
     //println(tot);
     for(int j = 0; j<tot; j++){
       x = floor(random(1)*verts);
-      println(x);
+      //println(x);
       if(col[x] != WALL && col[x] != RED && col[x] != FACE && x != high*wide)
         col[x] = WALL;
       else 
