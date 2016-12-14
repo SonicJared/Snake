@@ -20,13 +20,14 @@ void setup(){
   G.createSnake(att);
   G.createAdj();
   
-  G.randomWall(.3);
+  G.randomWall(percentWalled);
   
 }
 
+float percentWalled = .2;
 int xSize = 400, ySize = 400;
-int high = 10;
-int wide = 10;
+int high = 15;
+int wide = 15;
 int squareSize = min(xSize/wide, ySize/high);
 int player = high * wide;  //Player starting point (Bottom right corner)
 int snakeSize = 5;         //Snake starting size
@@ -81,6 +82,7 @@ void playGame(){
       if(path.get() != player && delay == 0) G.moveSnake(path.get());
       if(path.get() == player){
         playing = false;
+        played = true;
         return;
       }
     }     
@@ -98,6 +100,19 @@ void gameOver(){
   textAlign(CENTER, CENTER);
   text("Score: " + score, xSize/2, ySize/2);
   delay(5000);
+  reset();
+}
+
+void reset(){
+  G.removeSnake();
+  att.clear();
+  for(i = 1; i <= snakeSize; i++)att.prepend(i);
+  G.createSnake(att);
+  G.removeWalls();
+  G.randomWall(percentWalled);
+  score = 0;
+  player = high*wide;
+  
 }
 
 void menuScreen(){

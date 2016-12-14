@@ -162,6 +162,15 @@ class Graph{
     snake.deleteBack();
   }
   
+  void removeSnake(){
+    snake.moveFront();
+    while(snake.index() != -1){
+      col[snake.get()] = WHITE;
+      snake.moveNext();
+    }
+    snake.clear();
+  }
+  
   void createHorWall(int a, int b){ //Creates a horizontal wall from a to b.
                         //Pre: b-a < wide
     for(i = a; i <= b; i++){
@@ -191,10 +200,14 @@ class Graph{
     
     BFS(high*wide);
     if(dist[snake.front()] == INF){
-      for(i = 1; i <= verts; i++){
-        if(col[i] == WALL) col[i] = WHITE;
-      }
+      removeWalls();
       randomWall(percentFull);
+    }
+  }
+  
+  void removeWalls(){
+    for(i = 1; i <= verts; i++){
+      if(col[i] == WALL) col[i] = WHITE;
     }
   }
   
