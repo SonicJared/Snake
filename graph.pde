@@ -35,6 +35,18 @@ class Graph{
       dist[i] = INF;
       adj[i] = new List();
     }
+    createAdj();
+  }
+  
+  void clearGraph(){
+    verts = 0;
+    edges = 0;
+    source = NIL;
+    
+    adj = null;
+    col = null;
+    parent = null;
+    dist = null;
     
   }
   
@@ -124,6 +136,12 @@ class Graph{
               adj[u].moveNext();
               col[u] = BLACK;
           }
+    }
+  }
+  
+  void clearAdj(){
+    for(i = 1; i <= verts; i++){
+      adj[i].clear();
     }
   }
   
