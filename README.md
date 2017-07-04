@@ -4,6 +4,6 @@ This is a game implementing a Graph ADT, a List ADT, and Breadth First Search.  
 
 To play: Download processing at https://processing.org/download/
 
-Open the Snake file, and choose File -> export
+Open the Snake file, and choose File -> Export Application
 
-Now you have an executable file.
+A folder will be created called 'application.(Your OS)'.  In that folder will be an executable file called Snake.  Open the file to play.
